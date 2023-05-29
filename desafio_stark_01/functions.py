@@ -1,9 +1,10 @@
 import os
-
+from functools import reduce
 
 
 def menu()->str:
     os.system("cls")
+    print("<---Menu Principal Stark s.a.--->")
     print("1. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género M")
     print("2. Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género F")
     print("3. Recorrer la lista y determinar cuál es el superhéroe más alto de género M")
@@ -43,24 +44,73 @@ def print_all(heroes:list):
     print("|--------------------|------------------------------|--------------------|--------|--------|------|-----------------------|--------------------|----------|---------------|")
     for hero in heroes:
         print_heroe(hero)
-    os.system("pause")
 
-def print_heroesMasculinos(heroes:list):
+def print_heroesMasculinos(heroes:list)->list:
+    heroes_masculinos = list(filter(lambda h:h['genero']=='M',heroes))
+    print("<---Heroes Masculinos--->")
+    print_all(heroes_masculinos)
+    os.system('pause')
+    return heroes_masculinos
+
+def print_heroesFemeninos(heroes:list)->list:
+    heroes_femeninos = list(filter(lambda h:h['genero']=='F',heroes))
+    print("<---Heroes Femeninos--->")
+    print_all(heroes_femeninos)
+    os.system('pause')
+    return heroes_femeninos
+
+def print_masculinoAlto(heroes:list):
+    print("<--Heroes Masculinos-->")
+    print("por altura asc.")
+    heroes_MarculinosAltos = heroes
+    tam = len(heroes_MarculinosAltos)
+    for i in range(tam-1):
+        for j in range(i+1,tam):
+            if(float(heroes_MarculinosAltos[i]['altura']) < float(heroes_MarculinosAltos[j]['altura'])):
+                aux = heroes_MarculinosAltos[i]
+                heroes_MarculinosAltos[i] = heroes_MarculinosAltos[j]
+                heroes_MarculinosAltos[j] = aux        
+
     print(f"|{'nombre':^20s}|{'identidad':^30s}|{'empresa':^20s}|{'altura':^8s}|{'peso':^8s}|{'genero':^6s}|{'color ojos':^23s}|{'color pelo':^20s}|{'fuerza':^10s}|{'inteligencia':^15s}|")
     print("|--------------------|------------------------------|--------------------|--------|--------|------|-----------------------|--------------------|----------|---------------|")
-    for hero in heroes:
-        if(hero['genero'] == 'M'):
-            print_heroe(hero)
-    os.system("pause")
+    for h in heroes_MarculinosAltos:
+        print_heroe(h)
+    os.system('pause')
 
-def print_heroesFemeninos(heroes:list):
-    print(f"|{'nombre':^20s}|{'identidad':^30s}|{'empresa':^20s}|{'altura':^8s}|{'peso':^8s}|{'genero':^6s}|{'color ojos':^23s}|{'color pelo':^20s}|{'fuerza':^10s}|{'inteligencia':^15s}|")
-    print("|--------------------|------------------------------|--------------------|--------|--------|------|-----------------------|--------------------|----------|---------------|")
-    for hero in heroes:
-        if(hero['genero'] == 'F'):
-            print_heroe(hero)
-    os.system("pause")
+def print_masAlto_(heroes:list)->dict:
+    heroes_copy = heroes.copy()
+    tam = len(heroes_copy)
+    for i in range(tam-1):
+        for j in range(i+1,tam):
+            if(float(heroes_copy[i]['altura']) < float(heroes_copy[j]['altura'])):
+                aux = heroes_copy[i]
+                heroes_copy[i] = heroes_copy[j]
+                heroes_copy[j] = aux
+    for h in heroes_copy:
+        print(h)
+    os.system("pause")   
 
-def print_MasculinoAlto(heroes:list):
-    print_heroesMasculinos(heroes)
-    
+def print_masAlto(heroes:list)->dict:
+    print("el mas alt@ es: ")
+    heroe = reduce(lambda ant,act:act if float(act['altura'])>float(ant['altura']) else ant,heroes) 
+    print(heroe)
+    os.system('pause')
+    return heroe 
+
+def print_masBajo(heroes:list)->dict:
+    print("el mas baj@ es: ")
+    heroe = reduce(lambda ant,act:act if float(act['altura'])<float(ant['altura']) else ant,heroes)
+    print(heroe)
+    os.system('pause')
+    return heroe
+
+def print_avgAltura(heroes:list)->float:
+    print("la media de alturas es: ")
+    total = 0
+    for h in heroes:
+        total += float(h['altura'])
+    avg = total/len(heroes)
+    print(f"{avg}")
+    os.system('pause')
+    return avg
+

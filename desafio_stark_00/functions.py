@@ -1,5 +1,6 @@
 import os
 import re
+from functools import reduce
 
 
 def menu():
@@ -57,52 +58,42 @@ def print_nombresYaltura(heroes:list):
     os.system("pause")
 
 def print_masAlto(heroes:list)->dict:
-    print("listado de super-nombres y super_alturas")
-    for heroe in heroes:
-        print(f"|{heroe['nombre']:^20s}|{float(heroe['altura']):^08.03f}|")
-    print("____________________________________________________________________________")
+    local = heroes
     tam = len(heroes)
     print("comparando...")
-    for i in range(0, tam-1):
-        for j in range(1,tam):
-            mas_alto = heroes[i]
-            if(float(heroes[j]['altura']) > float(mas_alto['altura'])):
-                mas_alto = heroes[j]
-            else:
+    for i in range(tam-1):
+        for j in range(i+1,tam):
+            if(float(local[i]['altura']) > float(local[j]['altura'])):
                 pass
-
-    print("el mas alto es:")
-    print_heroe_(mas_alto)
+            else:
+                aux = local[i]
+                local[i]=local[j]
+                local[j]=aux
+    alto = local[0]
+    print("listado de super-nombres y super_alturas(mayor a menor)")
+    print_all(local)
     os.system("pause")
-    return mas_alto
+    return alto
 
 def print_masBajo(heroes:list)->dict:
-    print("listado de super-nombres y super_alturas")
-    for heroe in heroes:
-        print(f"|{heroe['nombre']:^20s}|{float(heroe['altura']):^08.03f}|")
-    print("____________________________________________________________________________")
+    local = heroes
     tam = len(heroes)
-    print("comparando...\n")
-    for i in range(0, tam-1):
-        for j in range(1,tam):
-            mas_bajo = heroes[i]
-            if(float(heroes[j]['altura']) < float(mas_bajo['altura'])):
-                mas_bajo = heroes[j]
-            else:
+    print("comparando...")
+    for i in range(tam-1):
+        for j in range(i+1,tam):
+            if(float(local[i]['altura']) < float(local[j]['altura'])):
                 pass
-
-    print("el mas bajo es:")
-    print_heroe_(mas_bajo)
-
+            else:
+                aux = local[i]
+                local[i]=local[j]
+                local[j]=aux
+    bajo = local[0]
+    print("listado de super-nombres y super_alturas(menor a mayor)")
+    print_all(local)
     os.system("pause")
-    return mas_bajo
+    return bajo
     
 def print_avgAltura(heroes:list):
-    print("listado de super-nombres y super_alturas")
-    for heroe in heroes:
-        print(f"|{heroe['nombre']:^20s}|{float(heroe['altura']):^08.03f}|")
-    print("____________________________________________________________________________")
-
     alturas = []
     for heroe in heroes:
         alturas.append(float(heroe['altura']))
@@ -116,25 +107,42 @@ def print_avgAltura(heroes:list):
     os.system("pause")
 
 def print_indicadores(heroes:list):
-    print(f"Min: {print_masBajo(heroes)['nombre']}")
-    print(f"max: {print_masAlto(heroes)['nombre']}")
+    alto = print_masAlto(heroes)
+    bajo = print_masBajo(heroes)
+    
+    print(f"Min: {bajo['nombre']}")
+    print(f"max: {alto['nombre']}")
 
 def print_pesadez(heroes:list):
-    print("super-lista con sus super-pesos")
-    for heroe in heroes:
-        print(f"|{heroe['nombre']:^20s}|{float(heroe['peso']):^08.03f}|")
-    print("balanceando...")
+    local = heroes
     tam = len(heroes)
-    for i in range(0,tam-1):
-        for j in range(1,tam):
-            if(heroes[i]['peso'] > heroes[j]['peso']):
-                mas_pesado = heroes[i]
-                menos_pesado = heroes[j]
-            elif(heroes[i]['peso'] < heroes[j]['peso']):
-                mas_pesado = heroes[j]
-                menos_pesado = heroes[i]
-            else:
+    print("comparando...")
+    for i in range(tam-1):
+        for j in range(i+1,tam):
+            if(float(local[i]['peso']) > float(local[j]['peso'])):
                 pass
-    print(f"mas pesado: {mas_pesado['nombre']}")
-    print(f"menos pesado: {menos_pesado['nombre']}")
+            else:
+                aux = local[i]
+                local[i]=local[j]
+                local[j]=aux
+
+    print("listado de super-nombres y super-pesos(mayor a menor)")
+    print_all(local)
     os.system("pause")
+
+    local = heroes
+    tam = len(heroes)
+    print("comparando...")
+    for i in range(tam-1):
+        for j in range(i+1,tam):
+            if(float(local[i]['peso']) < float(local[j]['peso'])):
+                pass
+            else:
+                aux = local[i]
+                local[i]=local[j]
+                local[j]=aux
+
+    print("listado de super-nombres y super-pesos(menor a mayor)")
+    print_all(local)
+    os.system("pause")
+

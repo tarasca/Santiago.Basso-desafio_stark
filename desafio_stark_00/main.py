@@ -17,22 +17,18 @@ while True:
             print_nombresYaltura(local_array)
             pass   
         case "4":
-            #mal
             print_masAlto(local_array)
             pass     
         case "5":
-            #mal
             print_masBajo(local_array)
             pass   
         case "6":
             print_avgAltura(local_array)
             pass     
         case "7":
-            #mal ya que incorpora caso 4 y 5
             print_indicadores(local_array)
             pass   
         case "8":
-            #mal
             print_pesadez(local_array)
             pass     
         case "9":
