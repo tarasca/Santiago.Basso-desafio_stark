@@ -3,65 +3,72 @@ from functions import *
 import os
 
 while True:
-    opt = menu()
+    opt = menu().capitalize()
     local_array = lista_heroes
     
 
     match(opt):
-        case "1":
+        case "A":
             #Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género M
             local_male = print_heroesMasculinos(local_array)
             pass
-        case "2":
+        case "B":
             #Recorrer la lista imprimiendo por consola el nombre de cada superhéroe de género F
             local_female = print_heroesFemeninos(local_array)
             pass
-        case "3":
+        case "C":
             #Recorrer la lista y determinar cuál es el superhéroe más alto de género M
             print_masAlto(local_male)
             pass
-        case "4":
+        case "D":
             #Recorrer la lista y determinar cuál es el superhéroe más alto de género F
             print_masAlto(local_female)
             pass
-        case "5":
+        case "E":
             #Recorrer la lista y determinar cuál es el superhéroe más bajo de género M
             print_masBajo(local_male)
             pass
-        case "6":
+        case "F":
             #Recorrer la lista y determinar cuál es el superhéroe más bajo de género F
             print_masBajo(local_female)
             pass
-        case "7":
+        case "G":
             #Recorrer la lista y determinar la altura promedio de los superhéroes de género M
             print_avgAltura(local_male)
             pass
-        case "8":
+        case "H":
             #Recorrer la lista y determinar la altura promedio de los superhéroes de género F
             print_avgAltura(local_female)
             pass
-        case "9":
+        case "I":
             #Informar cual es el Nombre del superhéroe asociado a cada uno de los indicadores anteriores (ítems C a F)
+            print_displayEtiquetas(local_array)
             pass
-        case "10":
+        case "J":
             #Determinar cuántos superhéroes tienen cada tipo de color de ojos.
+            heroes_colorOjos(local_array)
             pass
-        case "11":
+        case "K":
             #Determinar cuántos superhéroes tienen cada tipo de color de pelo.
+            heroes_colorPelo(local_array)
             pass
-        case "12":
+        case "L":
             #Determinar cuántos superhéroes tienen cada tipo de inteligencia (En caso de no tener, Inicializarlo con ‘No Tiene’).
+            heroes_inteligentes(local_array)
             pass
-        case "13":
+        case "M":
             #Listar todos los superhéroes agrupados por color de ojos.
+            print_colorOjos(local_array)
             pass
-        case "14":
+        case "N":
             #Listar todos los superhéroes agrupados por color de pelo.
+            print_colorPelos(local_array) 
             pass
-        case "15":
+        case "O":
             #Listar todos los superhéroes agrupados por tipo de inteligencia
+            print_inteligentes(local_array)
             pass
-        case "16":
+        case "P":
             #Salir
             break
         
