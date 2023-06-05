@@ -108,6 +108,7 @@ def print_pesadez(heroes:list):
 
 #---------------------------------------------------------------------------------------------------------------------------
 
+#imprime el titular de un submenu utilizado para testear funciones, ya q su uso es interno no hay muchas validaciones
 def titular_testing()->str:
     print("---testing functions---")
     print("0. Salir")
@@ -209,6 +210,7 @@ def test_thing(heroes:list):
 
 
 def stark_normalizar_datos(heroes:list):
+    #con una bandera compruebo que cada dato sea del tipo especifico, caso contrario casteo
     flag = False
     if(len(heroes) > 0):
         for h in heroes:
@@ -249,6 +251,7 @@ def stark_imprimir_nombre_heroes(heroes:list)->int:
     return ok
 
 def obtener_nombre_y_dato(h:dict, h_key:str):
+    #forma automata de conseguir un dato formateado si este existe,caso contrario devuelve -1
     ok = -1
     all_keys = h.keys()
     if(h_key in all_keys):
@@ -262,6 +265,7 @@ def stark_imprimir_nombres_y_alturas(heroes:list):
         print(obtener_nombre_y_dato(h,'altura'))
     
 def calcular_max(heroes:list,h_key:str)->dict:
+    #compruebo que las keys sean correctas, caso contrario devuelve -1
     keys = ['altura','peso','fuerza']
     if(h_key in keys):
         maximo = reduce(lambda h1,h2:h1 if h1[h_key] > h2[h_key] else h2,heroes)
@@ -270,6 +274,7 @@ def calcular_max(heroes:list,h_key:str)->dict:
         return -1
 
 def calcular_min(heroes:list,h_key:str)->dict:
+    #compruebo que las keys sean correctas, caso contrario devuelve -1
     keys = ['altura','peso','fuerza']
     if(h_key in keys):
         minimo = reduce(lambda h1,h2:h1 if h1[h_key] < h2[h_key] else h2,heroes)
@@ -278,6 +283,7 @@ def calcular_min(heroes:list,h_key:str)->dict:
         return -1
 
 def calcular_max_min_dato(heroes:list,type:str,h_key:str)->dict:
+    #corroboro el 2do parametro,caso positivo obtengo maximo o minimo, caso negativo devuelve -1
     if(type == 'maximo'):
         return calcular_max(heroes,h_key)
     elif(type == 'minimo'):
@@ -294,7 +300,7 @@ def stark_calcular_imprimir_heroe(heroes:list,type:str,h_key:str):
     else:
         return -1
 
-#    
+#mal funcionamiento, me tira error el reduce, dice que el segundo parametro no es 'subscriptable' 
 def sumar_dato_heroe(heroes:list, h_key:str)->dict:
     for h in heroes:
         if(not h):
@@ -306,21 +312,25 @@ def sumar_dato_heroe(heroes:list, h_key:str)->dict:
     return acum
 
 def dividir(num,den):
+    #corroboro no dividir por 0
     if(den == 0):
         return 0
     else :
         return num/den
 
 def calcular_promedio(heroes:list,h_key:str):
+    #mal funcionamiento debido a error acarriado en funcion sumar_dato_heroe
     return dividir(sumar_dato_heroe(heroes,h_key),len(heroes))
 
 def imprimir_promedio_altura(heroes:list):
+    #mal funcionamiento debido a error acarriado en funcion sumar_dato_heroe
     if(len(heroes)>0):
         imprimir_dato(calcular_promedio(heroes,'altura'))
     else:
         return -1
     
 def imprimir_menu():
+    #limpia pantalla e imprime el menu
     os.system("cls")
     imprimir_dato("*****STARK INDUSTRIES*****")
     imprimir_dato("<---Menu Principal--->")
@@ -337,13 +347,15 @@ def imprimir_menu():
     imprimir_dato("9. salir")
 
 def validar_entero(cad:str):
+    #valida q sea digito una cadena
     #return cad.isdigit()
     if(cad.isdigit()):
         return True
     else:
         return False
     
-def menu_principal():
+def menu_principal()->int:
+    #funcion menu, imprime y devuelve la opcion a ejecutar
     imprimir_menu()
     opt = input("ingrese opcion(numero): ")
     if(validar_entero(opt)):
@@ -352,6 +364,7 @@ def menu_principal():
         return -1
     
 def stark_marvel_app(heroes:list):
+    #funcion madre, aca sucede toda la magia :$
     while True:
         match(menu_principal()):
             case 1:
